@@ -1,0 +1,204 @@
+<template>
+<div class="login-bg">
+  <a-row>
+    <a-col :span="14" :lg="{ span: 14 }" :md="{ span: 12 }" :sm="{ span: 0 }" :xs="{ span: 0 }">
+      <div class="logo-wrap">
+        <img class="logo-container" :src="require('@/assets/img/logo-title.png')" />
+        <h2 class="logo-title">从制造业中来 到制造业中去</h2>
+        <div class="copyright">Copyright © {{ new Date().getFullYear() }} 雪浪云 All rights reserved 苏ICP备 18034176号-1</div>
+      </div>
+    </a-col>
+    <a-col :span="10" :lg="{ span: 10 }" :md="{ span: 12 }" :sm="{ span: 24 }" :xs="{ span: 24 }">
+      <div class="login-wrap">
+        <div class="login-container">
+          <div>
+            <h1 class="login-title">雪浪算盘用户管理</h1>
+          </div>
+          <a-form
+            name="custom-validation"
+            ref="formRef"
+            :model="formState"
+            :rules="rules"
+            v-bind="layout"
+          >
+            <a-form-item label="用户名" name="username">
+              <a-input v-model:value="formState.username" placeholder="请输入用户名" />
+            </a-form-item>
+            <a-form-item label="密码" name="password">
+              <a-input-password v-model:value="formState.password" placeholder="请输入登录密码" autocomplete="off" @keyup.enter="login" />
+            </a-form-item>
+            <a-form-item style="padding-top: 16px">
+              <div v-show="errorShow" class="login-message">用户名或密码错误</div>
+              <a-button class="login-btn" type="primary" @click="login">登录</a-button>
+            </a-form-item>
+          </a-form>
+        </div>
+      </div>
+    </a-col>
+  </a-row>
+</div>
+</template>
+
+<script>
+import { login as loginService } from './service/login'
+import { encrypt } from './utils'
+
+export default {
+  name: 'loginApp',
+  data() {
+    let checkUsername = async (rule, value) => {
+      if(value === '') {
+        return Promise.resolve(); 
+      }
+      if(!/^[0-9a-zA-Z]+$/.test(value)) {
+        return Promise.reject('只能是字母或数字');
+      }
+      if((value.length < 4) || (value.length > 16)) {
+        return Promise.reject('长度为4-16位');
+      }
+      return Promise.resolve(); 
+    };
+    let checkPassword = async (rule, value) => {
+      if(value === '') {
+        return Promise.resolve(); 
+      }
+      if(/(?=.*[\u4e00-\u9fa5])/.test(value)) {
+        return Promise.reject('必须且只包含大小写字母、数字、特称字符');
+      }
+      if(!/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\u4e00-\u9fa5])/.test(value)) {
+        return Promise.reject('必须且只包含大小写字母、数字、特称字符');
+      }
+      if((value.length < 6) || (value.length > 20)) {
+        return Promise.reject('长度为6-20位');
+      }
+      return Promise.resolve(); 
+    };
+    return {
+      formState: {
+        username: '',
+        password: ''
+      },
+      layout: {
+        layout: 'vertical'
+      },
+      rules: {
+        username: [
+          { required: true, message:'请输入用户名', trigger: 'change' },
+          { validator: checkUsername, trigger: 'change' }
+        ],
+        password: [
+          { required: true, message:'请输入登录密码', trigger: 'change' },
+          // { validator: checkPassword, trigger: 'change' }
+        ],
+      },
+      loading: false,
+      errorShow: false
+    }
+  },
+  watch: {
+    'formState.username': {
+      handler() {
+        this.errorShow = false
+      }
+    },
+    'formState.password': {
+      handler() {
+        this.errorShow = false
+      }
+    },
+  },
+  methods: {
+    login() {
+      this.errorShow = false
+      this.$refs.formRef.validate().then(() => {
+        let param = Object.assign({}, this.formState)
+        param.password = encrypt(param.password, 'adminkeysuanpan9')
+        loginService(param).then(res => {
+          if(res.data && (res.data.code == 1)) {
+            let origin = location.origin
+            let pathname = location.pathname
+            let arr = pathname.split('/')
+            if(arr.length > 0) {
+              arr[arr.length - 1] = 'index.html';
+            }
+            location.href = `${origin}${arr.join('/')}`
+          }else {
+            this.errorShow = true
+          }
+        }).catch(err => {
+          console.error('login error', err)
+        })
+      }).catch(() => {})
+    }
+  }
+}
+</script>
+
+<style lang="less">
+.login-bg {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('~@/assets/img/login-bg.png');
+  background-position: center;
+  background-size: cover;
+}
+.logo-wrap {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+.logo-container {
+  position: absolute;
+  user-select: none;
+  left: 10%;
+  top: 10%;
+}
+.logo-title {
+  position: absolute;
+  left: 10%;
+  top: 40%;
+  // transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
+  font-size: 40px;
+  user-select: none;
+}
+.copyright {
+  position: absolute;
+  left: 10%;
+  bottom: 10%;
+  color: #eee;
+  user-select: none;
+}
+.login-wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-container {
+  width: 400px;
+  padding: 36px 40px 36px 40px;
+  background: #fff;
+  border-radius: 4px;
+}
+.login-title {
+  font-size: 22px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.login-message {
+  position: absolute;
+  left: 0;
+  top: 42px;
+  color: #ff4d4f;
+}
+.login-btn {
+  // position: absolute;
+  // top: 0;
+  // right: 0;
+  width: 100%;
+}
+</style>

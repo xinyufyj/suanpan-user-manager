@@ -1,12 +1,16 @@
 import instance from './request'
 
-export function getUserList(startNum, pageSize) {
-  return instance.get('/user/list',{
+export function getUserList(startNum, pageSize, orderBy) {
+  return instance.post(
+    '/user/list',
+    orderBy,
+    {
       params: {
         startNum,
         pageSize,
       }
-    });
+    }
+  );
 }
 
 export function enableUser(userId) {

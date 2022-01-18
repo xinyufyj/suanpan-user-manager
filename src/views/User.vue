@@ -36,7 +36,7 @@
           </a-popconfirm>
         </template>
       </a-table>  
-      <a-pagination v-if="totalNum > 0" class="user-pagination" v-model:current="startNum" :defaultPageSize="pageSize" :total="totalNum" />
+      <a-pagination v-if="totalNum > 0" class="user-pagination" v-model:current="startNum" :defaultPageSize="pageSize" :total="totalNum" :showSizeChanger="false" />
     </div>
     <UserUpdate 
       v-if="userUpdateVisible" 
@@ -132,6 +132,17 @@ export default {
       totalNum: 0
     };
   },
+  computed: {
+    orderBy() {
+      if(this.createTimeSortDirection === 'descend') {
+        return { create_time: 'desc' }
+      }else if(this.createTimeSortDirection === 'ascend') {
+        return { create_time: 'asc' }
+      }else {
+        return {}
+      }
+    }
+  },
   watch: {
     startNum() {
       this.fetchUserList()
@@ -143,7 +154,7 @@ export default {
   methods: {
     fetchUserList() {
       this.loading = true
-      getUserList(this.startNum, this.pageSize)
+      getUserList(this.startNum, this.pageSize, this.orderBy)
       .then((res) => {
         if(res.data.code == '1') {
           this.totalNum = res.data.data.totalProperty
@@ -238,7 +249,7 @@ export default {
         console.error('copy text error:', err)
       })
     },
-    tableChanged({ action }) {
+    tableChanged(pagination, filters, sorter, { action }) {
       if(action !== 'sort') {
         return
       }
@@ -246,10 +257,13 @@ export default {
         this.columns[4].sortOrder = 'descend'
         this.createTimeSortDirection = 'descend'
       }else if(this.columns[4].sortOrder === 'descend') {
+        this.columns[4].sortOrder = false
+        this.createTimeSortDirection = false
+      }else if(this.columns[4].sortOrder === false) {
         this.columns[4].sortOrder = 'ascend'
         this.createTimeSortDirection = 'ascend'
       }
-
+      this.fetchUserList()
     },
   }
 };

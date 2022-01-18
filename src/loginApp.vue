@@ -50,8 +50,8 @@ export default {
       if(value === '') {
         return Promise.resolve(); 
       }
-      if(!/^[0-9a-zA-Z]+$/.test(value)) {
-        return Promise.reject('只能是字母或数字');
+      if(!/^[0-9a-zA-Z_]+$/.test(value)) {
+        return Promise.reject('只能是字母, 数字, 下划线');
       }
       if((value.length < 4) || (value.length > 16)) {
         return Promise.reject('长度为4-16位');

@@ -60,8 +60,8 @@ export default {
       if(value === '') {
         return Promise.resolve(); 
       }
-      if(!/^[0-9a-zA-Z]+$/.test(value)) {
-        return Promise.reject('只能是字母或数字');
+      if(!/^[0-9a-zA-Z_]+$/.test(value)) {
+        return Promise.reject('只能是字母, 数字, 下划线');
       }
       if((value.length < 4) || (value.length > 16)) {
         return Promise.reject('长度为4-16位');
@@ -106,11 +106,11 @@ export default {
       if(value === '') {
         return Promise.resolve(); 
       }
-      if(/(?=.*[\u4e00-\u9fa5])/.test(value)) {
-        return Promise.reject('必须且只包含大小写字母、数字、特称字符');
+      if(/(?=.*[\u0100-\uffff])/.test(value)) {
+        return Promise.reject('必须且只包含大小写字母、数字、英文特称字符');
       }
-      if(!/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\u4e00-\u9fa5])/.test(value)) {
-        return Promise.reject('必须且只包含大小写字母、数字、特称字符');
+      if(!/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[`~!@#$%^&*()-_=+{}[\]\|;:'"<>,.?/ ])/.test(value)) {
+        return Promise.reject('必须且只包含大小写字母、数字、英文特称字符');
       }
       if((value.length < 6) || (value.length > 20)) {
         return Promise.reject('长度为6-20位');

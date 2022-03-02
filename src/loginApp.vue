@@ -53,8 +53,8 @@ export default {
       if(!/^[0-9a-zA-Z_]+$/.test(value)) {
         return Promise.reject('只能是字母, 数字, 下划线');
       }
-      if((value.length < 4) || (value.length > 16)) {
-        return Promise.reject('长度为4-16位');
+      if((value.length < 8) || (value.length > 20)) {
+        return Promise.reject('长度为8-20位');
       }
       return Promise.resolve(); 
     };
@@ -109,6 +109,13 @@ export default {
   },
   methods: {
     login() {
+      // 判断登录错误次数
+      const loginErrorTime = +localStorage.getItem('loginErrorTime')||0;
+      const loginErrorCount = +localStorage.getItem('loginErrorCount')||0;
+      if(new Date().getTime() - loginErrorTime<=5*60*1000 && loginErrorCount>=5){
+        this.$message.error('已登录失败5次，请在5分钟后再次尝试登录');
+        return
+      }      
       this.errorShow = false
       this.$refs.formRef.validate().then(() => {
         let param = Object.assign({}, this.formState)
@@ -121,14 +128,33 @@ export default {
             if(arr.length > 0) {
               arr[arr.length - 1] = 'index.html';
             }
+            this.clearLoginErrorCount();
             location.href = `${origin}${arr.join('/')}`
           }else {
             this.errorShow = true
           }
         }).catch(err => {
           console.error('login error', err)
+          this.handleLoginError();
+          this.$message.error('网络错误,请检查您的网络');
         })
       }).catch(() => {})
+    },
+    handleLoginError() {
+      let loginErrorCount = localStorage.getItem('loginErrorCount')||0;
+      loginErrorCount = parseInt(loginErrorCount);
+      if(loginErrorCount < 5) {
+        loginErrorCount++;
+        // 如果已经五次错误 记录一下时间
+        if(loginErrorCount === 5){
+          localStorage.setItem('loginErrorTime',new Date().getTime());      
+        }
+        // 更新错误次数
+        localStorage.setItem('loginErrorCount',loginErrorCount);
+      }
+    },
+    clearLoginErrorCount() {
+      localStorage.setItem('loginErrorCount','0');
     }
   }
 }

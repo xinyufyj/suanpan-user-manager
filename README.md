@@ -17,3 +17,8 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## 全局localstorage使用
+- loginErrorCount: 登录错误
+- loginErrorTime: 登录错误时间

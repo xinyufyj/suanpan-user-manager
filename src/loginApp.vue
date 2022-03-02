@@ -53,8 +53,8 @@ export default {
       if(!/^[0-9a-zA-Z_]+$/.test(value)) {
         return Promise.reject('只能是字母, 数字, 下划线');
       }
-      if((value.length < 8) || (value.length > 20)) {
-        return Promise.reject('长度为8-20位');
+      if((value.length < 4) || (value.length > 16)) {
+        return Promise.reject('长度为4-16位');
       }
       return Promise.resolve(); 
     };
@@ -68,8 +68,8 @@ export default {
       if(!/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9\u4e00-\u9fa5])/.test(value)) {
         return Promise.reject('必须且只包含大小写字母、数字、特称字符');
       }
-      if((value.length < 6) || (value.length > 20)) {
-        return Promise.reject('长度为6-20位');
+      if((value.length < 8) || (value.length > 20)) {
+        return Promise.reject('长度为8-20位');
       }
       return Promise.resolve(); 
     };
@@ -88,7 +88,7 @@ export default {
         ],
         password: [
           { required: true, message:'请输入登录密码', trigger: 'change' },
-          // { validator: checkPassword, trigger: 'change' }
+          { validator: checkPassword, trigger: 'change' }
         ],
       },
       loading: false,
@@ -131,11 +131,11 @@ export default {
             this.clearLoginErrorCount();
             location.href = `${origin}${arr.join('/')}`
           }else {
+            this.handleLoginError();
             this.errorShow = true
           }
         }).catch(err => {
           console.error('login error', err)
-          this.handleLoginError();
           this.$message.error('网络错误,请检查您的网络');
         })
       }).catch(() => {})

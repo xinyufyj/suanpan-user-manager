@@ -46,3 +46,22 @@ export function updateUserPassword(params) {
   })
   return instance.post('/user/updateUserPassword', queryString)
 }
+
+// * 查询账号登录信息
+/**
+ * 
+ * @param {*} params
+ * @param {*} params.account - 用户名称
+ * @param {*} params.pageNum - 每页数量
+ * @param {*} params.pageSize - 第几页
+ * @param {*} params.orderBy - 排序规则
+ * @returns 
+ */
+export function getLoginInfo(params){
+  let data = {
+    pageNum:15,
+    orderBy:'login_time',
+  }
+  data = Object.assign(data,params)
+  return instance.post('/loginInfo/listByParams',data)
+}

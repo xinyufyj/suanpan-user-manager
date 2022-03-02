@@ -5,6 +5,7 @@ import store from './store'
 
 import 'ant-design-vue/dist/antd.css';
 import './assets/css/index.less';
+import './style/common.less';
 
 import App from './App.vue'
 import { UserOutlined, MenuUnfoldOutlined, MenuFoldOutlined, 

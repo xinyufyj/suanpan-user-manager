@@ -14,11 +14,8 @@
         theme="light"
         v-model:selectedKeys="selectedKeys"
       >
-        <a-menu-item key="user">
-          <template #icon>
-            <UserOutlined />
-          </template>
-          用户管理
+        <a-menu-item  v-for="item in menus" :key="item.route" @click="navigateTo('/'+item.route)">
+          {{item.name}}
         </a-menu-item>
       </a-menu>
     </div>
@@ -53,6 +50,7 @@
 <script>
 import { logout as logoutService } from '../service/login'
 import { message } from 'ant-design-vue';
+import menus from '../menu/index';
 
 export default {
   name: 'App',
@@ -60,6 +58,7 @@ export default {
     return {
       menuCollapsed: false,
       selectedKeys: ['user'],
+      menus,
     }
   },
   computed: {
@@ -88,7 +87,10 @@ export default {
         console.error('logout error:', err)
         message.error('登出失败')
       })
-    }
+    },
+    navigateTo(route){
+      this.$router.push(route)
+    },
   }
 }
 </script>

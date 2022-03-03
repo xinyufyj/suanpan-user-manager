@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-const instance = axios.create({
-  baseURL: '/auth2/admin/'
-});
+const instance = axios.create();
 
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {

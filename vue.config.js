@@ -14,6 +14,6 @@ module.exports = {
       entry: 'src/loginMain.js',
       template: 'public/login.html',
       filename: 'login.html'
-    }
-  }
+    },
+  },
 }

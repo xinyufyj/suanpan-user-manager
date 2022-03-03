@@ -1,8 +1,9 @@
 import instance from './request'
+import config from './config'
 
 export function getUserList(startNum, pageSize, orderBy) {
   return instance.post(
-    '/user/list',
+    config.baseUrl + '/admin/user/list',
     orderBy,
     {
       params: {
@@ -16,27 +17,27 @@ export function getUserList(startNum, pageSize, orderBy) {
 export function enableUser(userId) {
   const queryString = new URLSearchParams();
   queryString.append('userId', userId)
-  return instance.post('/user/enable', queryString)
+  return instance.post(config.baseUrl + '/admin/user/enable', queryString)
 }
 
 export function disableUser(userId) {
   const queryString = new URLSearchParams();
   queryString.append('userId', userId)
-  return instance.post('/user/disable', queryString)
+  return instance.post(config.baseUrl + '/admin/user/disable', queryString)
 }
 
 export function deleteUser(userId) {
   const queryString = new URLSearchParams();
   queryString.append('userId', userId)
-  return instance.post('/user/delete', queryString)
+  return instance.post(config.baseUrl + '/admin/user/delete', queryString)
 }
 
 export function addUser(params) {
-  return instance.post('/user/add', params)
+  return instance.post(config.baseUrl + '/admin/user/add', params)
 }
 
 export function updateUser(params) {
-  return instance.post('/user/update', params)
+  return instance.post(config.baseUrl + '/admin/user/update', params)
 }
 
 export function updateUserPassword(params) {
@@ -44,12 +45,11 @@ export function updateUserPassword(params) {
   Object.keys(params).forEach((key) => {
     queryString.append(key, params[key])
   })
-  return instance.post('/user/updateUserPassword', queryString)
+  return instance.post(config.baseUrl + '/admin/user/updateUserPassword', queryString)
 }
 
-// * 查询账号登录信息
 /**
- * 
+ *  * 查询账号登录信息
  * @param {*} params
  * @param {*} params.account - 用户名称
  * @param {*} params.pageNum - 每页数量
@@ -57,11 +57,19 @@ export function updateUserPassword(params) {
  * @param {*} params.orderBy - 排序规则
  * @returns 
  */
-export function getLoginInfo(params){
+export function getLoginInfo(params) {
   let data = {
-    pageNum:15,
-    orderBy:'login_time',
+    pageNum: 15,
+    orderBy: 'login_time',
   }
-  data = Object.assign(data,params)
-  return instance.post('/loginInfo/listByParams',data)
+  data = Object.assign(data, params)
+  return instance.post(config.baseUrl + '/admin/loginInfo/listByParams', data)
+}
+
+/**
+ * * 获取校验图片
+ * @returns 
+ */
+export function getAuthCode() {
+  return config.baseUrl + '/captcha'
 }

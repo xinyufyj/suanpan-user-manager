@@ -11,7 +11,7 @@
         <div class="logo-wrap">
           <img
             class="logo-container"
-            :src="require('@/assets/img/logo-title.png')"
+            :src="require('@/assets/image/logo-title.png')"
           />
           <h2 class="logo-title">从制造业中来 到制造业中去</h2>
           <div class="copyright">
@@ -53,8 +53,8 @@
                   @keyup.enter="login"
                 />
               </a-form-item>
-              <img :src="getAuthCode()" alt="" />
-              <a-form-item label="校验码" name="verCode">
+              <img :src="getAuthCode()" alt="" v-if='isEnableCheckCode'/>
+              <a-form-item label="校验码" name="verCode" v-if='isEnableCheckCode'>
                 <a-input
                   v-model:value="formState.verCode"
                   placeholder="请输入答案"
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { login as loginService } from "./service/login";
+import { login as loginService , isEnableCheckCode} from "./service/login";
 import { getAuthCode } from "./service/user";
 import { encrypt } from "./utils";
 
@@ -141,6 +141,7 @@ export default {
       errorShow: false,
       errorInfo:'',
       codeImg: "",
+      isEnableCheckCode:true,
     };
   },
   watch: {
@@ -155,7 +156,9 @@ export default {
       },
     },
   },
-  mounted() {},
+  mounted() {
+    isEnableCheckCode()
+  },
   methods: {
     getAuthCode,
     login() {
@@ -223,7 +226,7 @@ export default {
 .login-bg {
   width: 100vw;
   height: 100vh;
-  background-image: url("~@/assets/img/login-bg.png");
+  background-image: url("~@/assets/image/login-bg.png");
   background-position: center;
   background-size: cover;
 }

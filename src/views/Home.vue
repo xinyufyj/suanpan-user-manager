@@ -3,7 +3,7 @@
   <div class="nav-container pull-left" :style="{ width: `${menuWidth}px` }">
     <div class="logo-container">
       <div class="log-container-inner">
-        <img class="logo-img" :src="require('@/assets/img/logo.png')" alt="雪浪云">
+        <img class="logo-img" :src="require('@/assets/image/logo.png')" alt="雪浪云">
         <h1 v-if="!menuCollapsed" class="logo-label">雪浪算盘管理系统</h1>
       </div>
     </div>

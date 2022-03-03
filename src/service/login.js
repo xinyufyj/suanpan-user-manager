@@ -12,3 +12,7 @@ export function login(params) {
 export function logout() {
   return instance.post(config.baseUrl + '/admin/logout')
 }
+
+export function isEnableCheckCode() {
+  return instance.get(config.baseUrl + '/isEnableCaptcha')
+}

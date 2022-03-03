@@ -133,6 +133,9 @@ export default {
           { required: true, message: "请输入登录密码", trigger: "change" },
           // { validator: checkPassword, trigger: 'change' }
         ],
+        verCode: [
+          { required: true, message: "请输入校验码", trigger: "change" },
+        ]
       },
       loading: false,
       errorShow: false,

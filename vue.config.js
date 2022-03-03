@@ -1,6 +1,6 @@
 
 module.exports = {
-  publicPath: './',
+  publicPath: './auth2/',
   pages: {
     index: {
       // page 的入口

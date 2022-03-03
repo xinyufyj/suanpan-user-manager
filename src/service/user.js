@@ -52,8 +52,10 @@ export function updateUserPassword(params) {
  *  * 查询账号登录信息
  * @param {*} params
  * @param {*} params.account - 用户名称
- * @param {*} params.pageNum - 每页数量
- * @param {*} params.pageSize - 第几页
+ * @param {*} params.startTime - 用户名称
+ * @param {*} params.endTime - 用户名称
+ * @param {*} params.pageNum - 第几页
+ * @param {*} params.pageSize - 数量
  * @param {*} params.orderBy - 排序规则
  * @returns 
  */

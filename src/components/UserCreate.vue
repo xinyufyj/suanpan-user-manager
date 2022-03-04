@@ -68,8 +68,8 @@ export default {
       if(!/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[`~!@#$%^&*()-_=+{}[\]\|;:'"<>,.?/ ])/.test(value)) {
         return Promise.reject('必须且只包含大小写字母、数字、英文特称字符');
       }
-      if((value.length < 6) || (value.length > 20)) {
-        return Promise.reject('长度为6-20位');
+      if((value.length < 8) || (value.length > 20)) {
+        return Promise.reject('长度为8-20位');
       }
       return Promise.resolve(); 
     };

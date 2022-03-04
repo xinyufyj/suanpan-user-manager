@@ -61,11 +61,14 @@ export function updateUserPassword(params) {
  */
 export function getLoginInfo(params) {
   let data = {
-    pageNum: 15,
-    orderBy: 'login_time',
+    pageSize: 15,
   }
   data = Object.assign(data, params)
-  return instance.post(config.baseUrl + '/admin/loginInfo/listByParams', data)
+  return instance.post(config.baseUrl + '/admin/loginInfo/listByParams',data)
+}
+
+export function getFirstLoginInfoList() {
+  return instance.post(config.baseUrl + '/admin/loginInfo/list')
 }
 
 /**

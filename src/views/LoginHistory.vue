@@ -5,7 +5,12 @@
       <div class="common-search-box">
         <div class="common-search-item mr20">
           <span class="mr20">账号</span
-          ><a-input type="text" class="w200" allowClear v-model="account" />
+          ><a-input
+            type="text"
+            class="w200"
+            allowClear
+            v-model:value="account"
+          />
         </div>
         <div class="common-search-item mr20">
           <span class="mr20">日期和时间</span>
@@ -37,12 +42,12 @@
 </template>
 <script>
 import moment from "moment";
-import { getLoginInfo } from "../service/user";
+import { getLoginInfo, getFirstLoginInfoList } from "../service/user";
 const columns = [
   {
     title: "序号",
-    dataIndex: "id",
-    key: "id",
+    dataIndex: "sn",
+    key: "sn",
   },
   {
     title: "登录账号",
@@ -51,8 +56,8 @@ const columns = [
   },
   {
     title: "登录时间",
-    dataIndex: "login_time",
-    key: "login_time",
+    dataIndex: "loginTime",
+    key: "loginTime",
   },
 ];
 export default {
@@ -68,25 +73,34 @@ export default {
     };
   },
   mounted() {
-    this.getList();
+    getFirstLoginInfoList().then((r) => {
+      this.data = r.data.data.list.map((item, index) => {
+        item.sn = index + 1;
+        return item;
+      });
+      this.total = r.data.data.totalProperty;
+    });
   },
   methods: {
     moment,
     dateChange(dates, dateString) {
-    console.log(dateString)
       this.startTime =
         dateString[0] === "" ? undefined : new Date(dateString[0]).getTime();
-      this.endTime = dateString[1] === "" ? undefined : new Date(dateString[1]).getTime();
+      this.endTime =
+        dateString[1] === "" ? undefined : new Date(dateString[1]).getTime();
     },
     getList() {
       let params = {
         account: this.account,
-        page: this.current,
+        pageNum: this.current,
       };
       if (this.startTime !== undefined) params.startTime = this.startTime;
       if (this.endTime !== undefined) params.endTime = this.endTime;
       getLoginInfo(params).then((r) => {
-        this.data = r.data.data.list;
+        this.data = r.data.data.list.map((item, index) => {
+          item.sn = index + 1;
+          return item;
+        });
         this.total = r.data.data.totalProperty;
       });
     },

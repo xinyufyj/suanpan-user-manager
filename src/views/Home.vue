@@ -22,10 +22,11 @@
   </div>
   <div class="app-content-wrap pull-left" :style="{ width: `calc(100% - ${menuWidth}px)` }">
     <div class="app-content-head">
-      <a-button type="default" @click="toggleCollapsed">
+      <!-- <a-button type="default" @click="toggleCollapsed">
         <MenuUnfoldOutlined v-if="menuCollapsed" />
         <MenuFoldOutlined v-else />
-      </a-button>
+      </a-button> -->
+      <div></div>
       <a-popover placement="bottom" trigger="hover">
         <template #content>
           <ul class="user-popover">

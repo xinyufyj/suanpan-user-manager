@@ -1,6 +1,7 @@
+const { options } = require("less")
 
 module.exports = {
-  publicPath: './auth2/',
+  publicPath: './',
   pages: {
     index: {
       // page 的入口
@@ -15,5 +16,17 @@ module.exports = {
       template: 'public/login.html',
       filename: 'login.html'
     },
+  },
+  chainWebpack: config => {
+    config
+      .module
+      .rule("images")
+      .test(/\.(jpg|png|gif)$/)
+      .use("url-loader")
+      .loader("url-loader")
+      .tap(options => {
+        options.fallback.options.name = 'image/[name].[hash:8].[ext]'
+        return options;
+    });
   },
 }

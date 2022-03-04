@@ -57,6 +57,7 @@
               <a-form-item label="校验码" name="verCode" v-if='isEnableCheckCode'>
                 <a-input
                   v-model:value="formState.verCode"
+                  autocomplete="off"
                   placeholder="请输入答案"
                 />
               </a-form-item>
@@ -157,7 +158,9 @@ export default {
     },
   },
   mounted() {
-    isEnableCheckCode()
+    isEnableCheckCode().then((r=>{
+      this.isEnableCheckCode = r.data.data;
+    }))
   },
   methods: {
     getAuthCode,

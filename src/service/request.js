@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const instance = axios.create();
+const instance = axios.create({
+  withCredentials:true,
+});
 
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {

@@ -25,7 +25,7 @@ module.exports = {
       .use("url-loader")
       .loader("url-loader")
       .tap(options => {
-        options.fallback.options.name = 'image/[name].[hash:8].[ext]'
+        options.fallback.options.name = 'images/[name].[hash:8].[ext]'
         return options;
     });
   },

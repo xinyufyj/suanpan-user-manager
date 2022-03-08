@@ -58,7 +58,8 @@ export default {
   data() {
     return {
       menuCollapsed: false,
-      selectedKeys: ['user'],
+      // * 取出 #后面的内容
+      selectedKeys: [window.location.href.split('#')[1].replace('/','')],
       menus,
     }
   },

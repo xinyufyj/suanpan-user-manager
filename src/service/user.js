@@ -64,7 +64,7 @@ export function getLoginInfo(params) {
     pageSize: 15,
   }
   data = Object.assign(data, params)
-  return instance.post(config.baseUrl + '/admin/loginInfo/listByParams',data)
+  return instance.post(config.baseUrl + '/admin/loginInfo/listByParams', data)
 }
 
 export function getFirstLoginInfoList() {
@@ -76,5 +76,5 @@ export function getFirstLoginInfoList() {
  * @returns 
  */
 export function getAuthCode() {
-  return config.baseUrl + '/captcha'
+  return config.baseUrl + '/captcha?flag=' + new Date().getTime()
 }

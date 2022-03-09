@@ -53,7 +53,7 @@
                   @keyup.enter="login"
                 />
               </a-form-item>
-              <img :src="getAuthCode()" alt="" v-if='isEnableCheckCode'/>
+              <img :src="codeImg" alt="" v-if='isEnableCheckCode'/>
               <a-form-item label="校验码" name="verCode" v-if='isEnableCheckCode'>
                 <a-input
                   v-model:value="formState.verCode"
@@ -141,7 +141,7 @@ export default {
       loading: false,
       errorShow: false,
       errorInfo:'',
-      codeImg: "",
+      codeImg: getAuthCode(),
       isEnableCheckCode:true,
     };
   },
@@ -165,16 +165,6 @@ export default {
   methods: {
     getAuthCode,
     login() {
-      // 判断登录错误次数
-      const loginErrorTime = +localStorage.getItem("loginErrorTime") || 0;
-      const loginErrorCount = +localStorage.getItem("loginErrorCount") || 0;
-      if (
-        new Date().getTime() - loginErrorTime <= 5 * 60 * 1000 &&
-        loginErrorCount >= 5
-      ) {
-        this.$message.error("已登录失败5次，请在5分钟后再次尝试登录");
-        return;
-      }
       this.errorShow = false;
       this.$refs.formRef
         .validate()
@@ -194,6 +184,7 @@ export default {
                 location.href = `${origin}${arr.join("/")}`;
               } else {
                 this.handleLoginError();
+                this.codeImg = getAuthCode();
                 this.errorShow = true;
                 this.errorInfo = res.data.message;
               }

@@ -68,6 +68,9 @@ export default {
       return this.menuCollapsed ? 81 : 256
     }
   },
+  mounted(){
+    console.log('当前选定菜单',window.location.href.split('#')[1].replace('/',''),this.selectedKeys)
+  },
   methods: {
     toggleCollapsed() {
       this.menuCollapsed = !this.menuCollapsed

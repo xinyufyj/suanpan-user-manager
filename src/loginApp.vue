@@ -53,7 +53,11 @@
                   @keyup.enter="login"
                 />
               </a-form-item>
-              <img :src="codeImg" alt="" v-if='isEnableCheckCode'/>
+              <img :src="codeImg" alt=""
+                v-if='isEnableCheckCode' 
+                class="canClick" 
+                @click="refreshCodeImg()"
+              />
               <a-form-item label="校验码" name="verCode" v-if='isEnableCheckCode'>
                 <a-input
                   v-model:value="formState.verCode"
@@ -212,6 +216,9 @@ export default {
     clearLoginErrorCount() {
       localStorage.setItem("loginErrorCount", "0");
     },
+    refreshCodeImg(){
+      this.codeImg = getAuthCode();
+    }
   },
 };
 </script>
@@ -278,5 +285,8 @@ export default {
 }
 .login-btn {
   width: 100%;
+}
+.canClick {
+  cursor: pointer;
 }
 </style>

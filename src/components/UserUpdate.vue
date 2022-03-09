@@ -107,10 +107,10 @@ export default {
         return Promise.resolve(); 
       }
       if(/(?=.*[\u0100-\uffff])/.test(value)) {
-        return Promise.reject('必须且只包含大小写字母、数字、英文特称字符');
+        return Promise.reject('包含大小写英文字母、数字、特殊符号，且长度为8-20位');
       }
       if(!/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[`~!@#$%^&*()-_=+{}[\]\|;:'"<>,.?/ ])/.test(value)) {
-        return Promise.reject('必须且只包含大小写字母、数字、英文特称字符');
+        return Promise.reject('包含大小写英文字母、数字、特殊符号，且长度为8-20位');
       }
       if((value.length < 8) || (value.length > 20)) {
         return Promise.reject('长度为8-20位');

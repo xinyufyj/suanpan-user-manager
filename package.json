@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
-    "start": "npm run serve"
+    "start": "npm run serve",
+    "copy": "npm run build && node build-copy.mjs"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
@@ -24,6 +25,7 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "chalk": "^5.0.1",
     "less": "^3.0.4",
     "less-loader": "^5.0.0"
   }

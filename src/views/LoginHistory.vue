@@ -29,10 +29,11 @@
         <div><a-button type="primary" @click="getList()">查询</a-button></div>
       </div>
       <a-divider />
-      <a-table :columns="columns" :data-source="data" class="mb20" />
+      <a-table :columns="columns" :data-source="data" class="mb20" :pagination="false"/>
       <a-pagination
         v-model="current"
         :total="total"
+        :defaultPageSize="15"
         show-less-items
         show-quick-jumper
         @change="changePage"

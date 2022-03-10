@@ -16,14 +16,14 @@ fs.copyFile('./dist/login.html',MIAN_DEST+'login.html',(err)=>{
     if(err){
         error(err.toString())
     }else{
-        console.log(chalh.yellow('index.html:') + chalk.green('执行复制动作完成'));
+        console.log(chalk.yellow('index.html:') + chalk.green('执行复制动作完成'));
     }
 })
 fs.copyFile('./dist/index.html',MIAN_DEST+'index.html',(err)=>{
     if(err){
         error(err.toString())
     }else{
-        console.log(chalh.yellow('login.html:') + chalk.green('执行复制动作完成'));
+        console.log(chalk.yellow('login.html:') + chalk.green('执行复制动作完成'));
     }
 })
 js.forEach(item=>{
@@ -31,7 +31,7 @@ js.forEach(item=>{
         if(err){
             error(err.toString())
         }else{
-            console.log(chalh.yellow('js:') + chalk.green('执行复制动作完成'));
+            console.log(chalk.yellow('js:') + chalk.green('执行复制动作完成'));
         }
     })
 })
@@ -40,7 +40,7 @@ css.forEach(item=>{
         if(err){
             error(err.toString())
         }else{
-            console.log(chalh.yellow('css:') + chalk.green('执行复制动作完成'));
+            console.log(chalk.yellow('css:') + chalk.green('执行复制动作完成'));
         }
     })
 })
@@ -49,7 +49,7 @@ images.forEach(item=>{
         if(err){
             error(err.toString())
         }else{
-            console.log(chalh.yellow('images:') + chalk.green('执行复制动作完成'));
+            console.log(chalk.yellow('images:') + chalk.green('执行复制动作完成'));
         }
     })
 })

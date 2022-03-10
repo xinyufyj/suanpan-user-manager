@@ -36,7 +36,7 @@ js.forEach(item=>{
     })
 })
 css.forEach(item=>{
-    fs.copyFile('./dist/css/'+item,CSS_DEST+item,()=>{
+    fs.copyFile('./dist/css/'+item,CSS_DEST+item,(err)=>{
         if(err){
             error(err.toString())
         }else{
@@ -45,7 +45,7 @@ css.forEach(item=>{
     })
 })
 images.forEach(item=>{
-    fs.copyFile('./dist/images/'+item,IMAGE_DEST+item,()=>{
+    fs.copyFile('./dist/images/'+item,IMAGE_DEST+item,(err)=>{
         if(err){
             error(err.toString())
         }else{

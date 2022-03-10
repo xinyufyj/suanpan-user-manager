@@ -33,7 +33,7 @@
       <a-pagination
         v-model="current"
         :total="total"
-        :defaultPageSize="15"
+        :pageSize="15"
         show-less-items
         show-quick-jumper
         @change="changePage"
@@ -90,11 +90,11 @@ export default {
       this.endTime =
         dateString[1] === "" ? undefined : new Date(dateString[1]).getTime();
     },
-    getList() {
+    getList(page = 1) {
       let params = {
         account: this.account,
-        pageNum: this.current,
-      };
+        pageNum: page,
+      }
       if (this.startTime !== undefined) params.startTime = this.startTime;
       if (this.endTime !== undefined) params.endTime = this.endTime;
       getLoginInfo(params).then((r) => {
@@ -105,8 +105,8 @@ export default {
         this.total = r.data.data.totalProperty;
       });
     },
-    changePage() {
-      this.getList();
+    changePage(index) {
+      this.getList(index);
     },
   },
 };

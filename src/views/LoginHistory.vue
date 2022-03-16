@@ -56,9 +56,19 @@ const columns = [
     key: "account",
   },
   {
+    title: "ip地址",
+    dataIndex: "ipAddr",
+    key: "ipAddr",
+  },
+  {
+    title: "类型",
+    dataIndex: "action",
+    key: "action", 
+  },
+  {
     title: "登录时间",
-    dataIndex: "loginTime",
-    key: "loginTime",
+    dataIndex: "time",
+    key: "time",
   },
 ];
 export default {

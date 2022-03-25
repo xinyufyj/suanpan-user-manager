@@ -17,6 +17,7 @@ module.exports = {
       filename: 'login.html'
     },
   },
+  productionSourceMap:false,
   chainWebpack: config => {
     config
       .module

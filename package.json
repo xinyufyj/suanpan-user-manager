@@ -5,8 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
+    "build:production": "vue-cli-service build --modern --mode=production",
     "start": "npm run serve",
-    "copy": "npm run build && node build-copy.mjs"
+    "copy": "npm run build:production && node build-copy.mjs"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",

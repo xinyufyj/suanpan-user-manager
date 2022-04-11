@@ -68,7 +68,11 @@ export function getLoginInfo(params) {
 }
 
 export function getFirstLoginInfoList() {
-  return instance.post(config.baseUrl + '/admin/loginInfo/list')
+  return instance.post(config.baseUrl + '/admin/loginInfo/list',{},{
+    headers:{
+      "Content-Type":"application/json"
+    }
+  })
 }
 
 /**

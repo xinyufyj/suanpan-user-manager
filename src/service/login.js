@@ -10,7 +10,11 @@ export function login(params) {
 }
 
 export function logout() {
-  return instance.post(config.baseUrl + '/admin/logout')
+  return instance.post(config.baseUrl + '/admin/logout',{},{
+    headers:{
+      "Content-Type":"application/json"
+    }
+  })
 }
 
 export function isEnableCheckCode() {
